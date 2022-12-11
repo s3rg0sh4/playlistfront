@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from 'react';
+import './styles/App.css';
+import VideoList from './components/VideoList';
+import MyButton from './components/UI/button/MyButton';
+import MyInput from './components/UI/input/MyInput';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () => {
+    const [videos, setVideos] = useState([
+        {id: 1, title: 'v1', body: 'link'},
+        {id: 2, title: 'v2', body: 'link'},
+        {id: 3, title: 'v3', body: 'link'}
+    ])
+
+    const [title, setTitle] = useState('');
+    
+    const bodyInputRef = useRef();
+
+    const addNewVideo = (e) => {
+        e.preventDefault();
+        console.log(title);
+        console.log(bodyInputRef.current.value)
+    }
+
+    return (
+        <div className="App">
+            <form>
+                <MyInput 
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    type="text" 
+                    placeholder="Название видео"
+                />
+                <MyInput 
+                    ref={bodyInputRef}
+                    type="text" 
+                    placeholder="Ссылка на видео"
+                />
+
+                <MyButton onClick={addNewVideo}>
+                    Добавить видео
+                </MyButton>
+            </form>
+            <VideoList videos={videos} title="Список 1"/>
+        </div>
   );
 }
 
